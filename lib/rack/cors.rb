@@ -52,6 +52,7 @@ module Rack
         end
       end
       status, headers, body = @app.call env
+      body.close if body.respond_to?(:close)
       if cors_headers
         headers = headers.merge(cors_headers)
         unless headers['Access-Control-Allow-Origin'] == '*'
